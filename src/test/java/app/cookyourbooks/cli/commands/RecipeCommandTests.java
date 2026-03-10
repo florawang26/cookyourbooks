@@ -104,7 +104,7 @@ class RecipeCommandTests extends CliTestBase {
         }
         """);
 
-    sendCommands("import json " + jsonPath.toAbsolutePath() + " My Cookbook", "quit");
+    sendCommands("import json " + jsonPath.toAbsolutePath() + " \"My Cookbook\"", "quit");
     runCli();
 
     assertThat(getOutput()).contains("Imported 'Imported Pancakes' into 'My Cookbook'");

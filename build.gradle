@@ -12,9 +12,6 @@ buildscript {
             url 'https://central.sonatype.com/repository/maven-snapshots/'
         }
     }
-    dependencies {
-        classpath 'com.pawtograder.info.solidsoft.gradle.pitest:gradle-pitest-plugin:0.1.0'
-    }
 }
 
 plugins {
@@ -31,8 +28,6 @@ plugins {
     // Code coverage
     id 'jacoco'
 }
-
-apply plugin: 'com.pawtograder.info.solidsoft.pitest'
 
 repositories {
     mavenCentral()

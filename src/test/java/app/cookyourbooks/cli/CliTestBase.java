@@ -139,7 +139,7 @@ public abstract class CliTestBase {
   /** Creates a collection via CLI. Queued until runCli() is called. */
   protected void setupCollection(String name) throws IOException {
     if (createdCollections.add(name)) {
-      sendCommand("collection create " + name);
+      sendCommand("collection create \"" + name + "\"");
     }
   }
 
@@ -153,7 +153,7 @@ public abstract class CliTestBase {
     setupCollection(collectionTitle);
     Path jsonPath = tempDir.resolve(UUID.randomUUID() + ".json");
     Files.writeString(jsonPath, OBJECT_MAPPER.writeValueAsString(recipe));
-    sendCommand("import json " + jsonPath.toAbsolutePath() + " " + collectionTitle);
+    sendCommand("import json " + jsonPath.toAbsolutePath() + " \"" + collectionTitle + "\"");
   }
 
   /**

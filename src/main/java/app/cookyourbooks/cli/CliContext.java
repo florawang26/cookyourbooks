@@ -7,6 +7,9 @@ import org.jline.terminal.Terminal;
 import org.jspecify.annotations.NonNull;
 
 import app.cookyourbooks.cli.completion.CookModeHolder;
+import app.cookyourbooks.repository.RecipeCollectionRepository;
+import app.cookyourbooks.repository.RecipeRepository;
+import app.cookyourbooks.services.LibrarianService;
 
 /**
  * Shared context for CLI commands: I/O and state.
@@ -32,8 +35,11 @@ public record CliContext(
     @NonNull Terminal terminal,
     @NonNull LineReader lineReader,
     @NonNull PrintWriter out,
-    @NonNull CookModeHolder cookModeHolder
-    // TODO: Add your service references here
+    @NonNull CookModeHolder cookModeHolder,
+    @NonNull LibrarianService librarianService,
+    @NonNull RecipeRepository recipeRepository,
+    @NonNull RecipeCollectionRepository collectionRepository
+    // TODO: Add your other service references here
     ) {
 
   /** Writes a line to the terminal output. */

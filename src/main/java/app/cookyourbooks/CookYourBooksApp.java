@@ -1,5 +1,6 @@
 package app.cookyourbooks;
 
+import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,11 +8,15 @@ import java.util.List;
 import org.jline.reader.Candidate;
 import org.jline.reader.Completer;
 import org.jline.reader.LineReader;
+import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.ParsedLine;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 
+import app.cookyourbooks.cli.CliContext;
+import app.cookyourbooks.cli.CookYourBooksCli;
 import app.cookyourbooks.cli.completion.CookModeHolder;
+import app.cookyourbooks.services.LibrarianService;
 
 /** Main entry point for CookYourBooks CLI. */
 public final class CookYourBooksApp {
@@ -44,19 +49,29 @@ public final class CookYourBooksApp {
     var collRepo = library.getCollectionRepository();
     var conversionRegistry = library.getConversionRegistry();
 
-    // TODO: Create your services using the repositories and registry above
-
-    // TODO: Create your CLI. It must be a Runnable (have a run() method).
-    // The CLI reads commands from the terminal and writes output to it.
-
-    // TODO: Create your completer. It MUST implement org.jline.reader.Completer.
-    // The test harness calls completer.complete() to get tab completion candidates.
+    LibrarianService librarianService = new LibrarianService(collRepo, conversionRegistry);
 
     // REQUIRED: Use this CookModeHolder for cook mode state
     CookModeHolder cookModeHolder = new CookModeHolder();
 
-    throw new UnsupportedOperationException(
-        "TODO: Wire your CLI components and return new TestCliHarness(cli, completer, lineReader, cookModeHolder)");
+    Completer completer =
+        new Completer() {
+          @Override
+          public void complete(LineReader reader, ParsedLine line, List<Candidate> candidates) {
+            // No-op completer for now.
+          }
+        };
+    LineReader lineReader =
+        LineReaderBuilder.builder().terminal(terminal).completer(completer).build();
+    PrintWriter out = new PrintWriter(terminal.writer(), true);
+
+    CliContext context =
+        new CliContext(
+            terminal, lineReader, out, cookModeHolder, librarianService, recipeRepo, collRepo);
+
+    Runnable cliRunner = new CookYourBooksCli(context);
+
+    return new TestCliHarness(cliRunner, completer, lineReader, cookModeHolder);
   }
 
   /** Test harness for CLI E2E tests. Opaque wrapper around wired CLI components. */
@@ -120,10 +135,7 @@ public final class CookYourBooksApp {
   @SuppressWarnings("UnusedVariable") // Variables are hints for student implementation
   public static void main(String[] args) {
     Path libraryPath = Path.of("cyb-library.json");
-    CybLibrary library = CybLibrary.load(libraryPath);
 
-    // TODO: Create your services, CLI, completer, and run the CLI.
-    // For interactive use, build a terminal with TerminalBuilder.builder().system(true).build()
     Terminal terminal;
     try {
       terminal = TerminalBuilder.builder().system(true).build();
@@ -131,7 +143,6 @@ public final class CookYourBooksApp {
       throw new RuntimeException("Failed to create terminal", e);
     }
 
-    throw new UnsupportedOperationException(
-        "TODO: Wire your CLI and run it. Use createTestHarness as a reference.");
+    createTestHarness(libraryPath, terminal).run();
   }
 }

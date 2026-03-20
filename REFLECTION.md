@@ -12,7 +12,7 @@ Complete all 6 questions below. Reflection questions are worth 20 points total (
    resolve the tension?
 
 Answer:
-
+Actor heuristic influenced me most. I split services by Librarian, Cook, and Planner, and kept Transformer separate because all actors may need it. I picked this over one big service so features can change without breaking everything.
 ---
 
 2. **ADR Writing Experience:** Reflect on writing your ADRs. Did documenting your decisions change
@@ -21,7 +21,7 @@ Answer:
    assignment?
 
 Answer:
-
+Writing ADRs helped me think more clearly about why I made each decision. The Consequences part made me notice tradeoffs instead of only benefits. For team projects, I think ADRs are more useful because they help everyone stay aligned.
 ---
 
 3. **Transformation vs. Persistence:** A4's `RecipeService.scaleRecipe()` always saved. Your design
@@ -30,7 +30,7 @@ Answer:
    bolt this capability onto A4's interface?
 
 Answer:
-
+In my design, transform and save are separate. Scale/convert first creates a preview result, then CLI asks user to save or discard. If I used A4 always-save style, preview-before-save would not work and it would save unwanted recipes.
 ---
 
 4. **Cook Mode State Management:** Interactive cooking mode tracks state (current step, original
@@ -40,7 +40,7 @@ Answer:
    same state management approach work for a future "meal planning session" for the Planner actor?
 
 Answer:
-
+Cook mode state is handled in the CLI command flow (current step index during loop). I kept it there because it is interactive UI behavior, not repository logic. This same idea could work for a future planner session too.
 ---
 
 5. **E2E Testing Experience:** This assignment used E2E tests with a dumb terminal instead of mocks.
@@ -49,7 +49,7 @@ Answer:
    your takeaway about when to use each approach?
 
 Answer:
-
+E2E tests with dumb terminal caught real flow issues like prompts, command order, and mode switching. Mock tests usually miss those interaction bugs. I still think unit tests are useful for pure logic, but E2E was better for this CLI.
 ---
 
 6. **AI Collaboration:** Which parts of the CLI did AI help you build most effectively? Where did
@@ -58,3 +58,4 @@ Answer:
    apply them?
 
 Answer:
+AI helped most with repetitive command/service code and wiring. I still had to decide boundaries and architecture myself. Sometimes AI suggested too much in one place, so I changed it to keep separation of concerns.

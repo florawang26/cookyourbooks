@@ -16,10 +16,17 @@ import app.cookyourbooks.cli.commands.CollectionsCommand;
 import app.cookyourbooks.cli.commands.Command;
 import app.cookyourbooks.cli.commands.ConversionCommand;
 import app.cookyourbooks.cli.commands.ConversionsCommand;
+import app.cookyourbooks.cli.commands.ConvertCommand;
 import app.cookyourbooks.cli.commands.CookCommand;
+import app.cookyourbooks.cli.commands.DeleteCommand;
+import app.cookyourbooks.cli.commands.ExportCommand;
 import app.cookyourbooks.cli.commands.HelpCommand;
 import app.cookyourbooks.cli.commands.ImportCommand;
 import app.cookyourbooks.cli.commands.RecipesCommand;
+import app.cookyourbooks.cli.commands.ScaleCommand;
+import app.cookyourbooks.cli.commands.SearchCommand;
+import app.cookyourbooks.cli.commands.ShoppingListCommand;
+import app.cookyourbooks.cli.commands.ShowCommand;
 
 public class CookYourBooksCli implements Runnable {
 
@@ -48,7 +55,14 @@ public class CookYourBooksCli implements Runnable {
     commands.put("conversions", new ConversionsCommand());
     commands.put("conversion", new ConversionCommand());
     commands.put("import", new ImportCommand());
+    commands.put("show", new ShowCommand());
+    commands.put("search", new SearchCommand());
+    commands.put("delete", new DeleteCommand());
+    commands.put("scale", new ScaleCommand());
+    commands.put("convert", new ConvertCommand());
+    commands.put("shopping-list", new ShoppingListCommand());
     commands.put("cook", new CookCommand());
+    commands.put("export", new ExportCommand());
   }
 
   @Override

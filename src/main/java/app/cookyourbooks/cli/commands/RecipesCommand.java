@@ -26,16 +26,17 @@ public class RecipesCommand implements Command {
     try {
       recipes = context.librarianService().getRecipesInCollection(title);
     } catch (CollectionNotFoundException e) {
-      context.println("Collection not found: " + title);
+      context.println(
+          "Collection not found: '" + title + "'. Use 'collections' to see available collections.");
       return;
     }
 
-    context.println("Recipes in " + title + ": " + recipes.size() + " recipes");
+    context.println(title + " (" + recipes.size() + " recipes):");
     for (int i = 0; i < recipes.size(); i++) {
       Recipe recipe = recipes.get(i);
       String servings =
           recipe.getServings() != null ? servingsText(recipe.getServings()) : "No servings";
-      context.println("  " + (i + 1) + ". " + recipe.getTitle() + " - " + servings);
+      context.println("  " + (i + 1) + ". " + recipe.getTitle() + "          " + servings);
     }
   }
 

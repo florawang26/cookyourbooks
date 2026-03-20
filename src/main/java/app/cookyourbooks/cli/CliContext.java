@@ -10,6 +10,8 @@ import app.cookyourbooks.cli.completion.CookModeHolder;
 import app.cookyourbooks.repository.RecipeCollectionRepository;
 import app.cookyourbooks.repository.RecipeRepository;
 import app.cookyourbooks.services.LibrarianService;
+import app.cookyourbooks.services.PlannerService;
+import app.cookyourbooks.services.TransformerService;
 
 /**
  * Shared context for CLI commands: I/O and state.
@@ -37,10 +39,10 @@ public record CliContext(
     @NonNull PrintWriter out,
     @NonNull CookModeHolder cookModeHolder,
     @NonNull LibrarianService librarianService,
+    @NonNull PlannerService plannerService,
+    @NonNull TransformerService transformerService,
     @NonNull RecipeRepository recipeRepository,
-    @NonNull RecipeCollectionRepository collectionRepository
-    // TODO: Add your other service references here
-    ) {
+    @NonNull RecipeCollectionRepository collectionRepository) {
 
   /** Writes a line to the terminal output. */
   public void println(String s) {

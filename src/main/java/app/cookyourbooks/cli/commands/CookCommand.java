@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Locale;
 
 import app.cookyourbooks.cli.CliContext;
-import app.cookyourbooks.model.Ingredient;
-import app.cookyourbooks.model.IngredientRef;
 import app.cookyourbooks.model.Instruction;
 import app.cookyourbooks.model.Recipe;
 import app.cookyourbooks.model.Servings;
@@ -21,22 +19,15 @@ public class CookCommand implements Command {
     }
 
     String query = args.get(1).trim();
-    List<Recipe> matches =
-        context.recipeRepository().findAll().stream()
-            .filter(
-                r -> r.getTitle().toLowerCase(Locale.ROOT).contains(query.toLowerCase(Locale.ROOT)))
-            .toList();
+    List<Recipe> matches = context.librarianService().findRecipes(query);
 
     if (matches.isEmpty()) {
-      context.println("Recipe not found: " + query);
+      context.println(
+          "Recipe not found: '" + query + "'. Use 'search' to find recipes by ingredient.");
       return;
     }
     if (matches.size() > 1) {
-      context.println("Multiple recipes match '" + query + "':");
-      for (Recipe recipe : matches) {
-        context.println("  - " + recipe.getTitle());
-      }
-      context.println("Please specify a more precise recipe name.");
+      CommandSupport.printAmbiguousRecipes(context, query, matches, "cook");
       return;
     }
 
@@ -110,13 +101,15 @@ public class CookCommand implements Command {
       } else {
         context.println("Serves " + servings.getAmount() + " " + description);
       }
+    } else {
+      context.println("No Servings");
     }
     printIngredients(context, recipe);
   }
 
   private static void printIngredients(CliContext context, Recipe recipe) {
     context.println("Ingredients:");
-    for (Ingredient ingredient : recipe.getIngredients()) {
+    for (var ingredient : recipe.getIngredients()) {
       context.println("  - " + ingredient);
     }
   }
@@ -127,14 +120,16 @@ public class CookCommand implements Command {
     context.println("Step " + (index + 1) + " of " + recipe.getInstructions().size());
     context.println(step.getText());
 
-    List<IngredientRef> refs = step.getIngredientRefs();
+    List<app.cookyourbooks.model.IngredientRef> refs = step.getIngredientRefs();
     if (refs.isEmpty()) {
       context.println("(no ingredients used in this step)");
     } else {
       context.println("Uses:");
-      for (IngredientRef ref : refs) {
-        context.println("  - " + ref.ingredient());
-      }
+      String joined =
+          refs.stream()
+              .map(ref -> CommandSupport.ingredientRefDisplay(ref.ingredient(), ref.quantity()))
+              .collect(java.util.stream.Collectors.joining(", "));
+      context.println("  " + joined);
     }
 
     context.println("[next] [prev] [ingredients] [quit]");

@@ -10,13 +10,17 @@ import org.jline.reader.Completer;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.ParsedLine;
+import org.jline.reader.impl.DefaultParser;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 
 import app.cookyourbooks.cli.CliContext;
 import app.cookyourbooks.cli.CookYourBooksCli;
 import app.cookyourbooks.cli.completion.CookModeHolder;
+import app.cookyourbooks.cli.completion.CybCompleter;
 import app.cookyourbooks.services.LibrarianService;
+import app.cookyourbooks.services.PlannerService;
+import app.cookyourbooks.services.TransformerService;
 
 /** Main entry point for CookYourBooks CLI. */
 public final class CookYourBooksApp {
@@ -49,25 +53,35 @@ public final class CookYourBooksApp {
     var collRepo = library.getCollectionRepository();
     var conversionRegistry = library.getConversionRegistry();
 
-    LibrarianService librarianService = new LibrarianService(collRepo, conversionRegistry);
+    LibrarianService librarianService =
+        new LibrarianService(collRepo, recipeRepo, conversionRegistry);
+    PlannerService plannerService = new PlannerService();
+    TransformerService transformerService =
+        new TransformerService(librarianService::getConversionRegistry);
 
     // REQUIRED: Use this CookModeHolder for cook mode state
     CookModeHolder cookModeHolder = new CookModeHolder();
 
-    Completer completer =
-        new Completer() {
-          @Override
-          public void complete(LineReader reader, ParsedLine line, List<Candidate> candidates) {
-            // No-op completer for now.
-          }
-        };
+    Completer completer = new CybCompleter(cookModeHolder, recipeRepo, collRepo, librarianService);
+
+    DefaultParser parser = new DefaultParser();
+    parser.setEscapeChars(null);
+
     LineReader lineReader =
-        LineReaderBuilder.builder().terminal(terminal).completer(completer).build();
+        LineReaderBuilder.builder().terminal(terminal).parser(parser).completer(completer).build();
     PrintWriter out = new PrintWriter(terminal.writer(), true);
 
     CliContext context =
         new CliContext(
-            terminal, lineReader, out, cookModeHolder, librarianService, recipeRepo, collRepo);
+            terminal,
+            lineReader,
+            out,
+            cookModeHolder,
+            librarianService,
+            plannerService,
+            transformerService,
+            recipeRepo,
+            collRepo);
 
     Runnable cliRunner = new CookYourBooksCli(context);
 

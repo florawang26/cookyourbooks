@@ -1,6 +1,7 @@
 # CookYourBooks
 
 A full-stack Java desktop application for digitizing, organizing, and using personal recipe collections. Features an interactive CLI, JavaFX GUI, Gemini API image import, intelligent unit conversion and scaling, and JSON persistence — built with hexagonal architecture across a 4-person agile team.
+<img width="977" height="680" alt="image" src="https://github.com/user-attachments/assets/5a72143e-5219-491f-9fe9-62b508292ce2" />
 
 ## Features
 

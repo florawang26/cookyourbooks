@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!--
+  Library view layout for CookYourBooks.
+
+  This is the default view shown when the user opens the app. It displays
+  a list of collections on the left and the recipes within the selected
+  collection on the right.
+
+  Root is a StackPane so that the loading indicator and undo notification
+  can be layered on top of the main content without consuming layout space
+  when hidden (visible="false" managed="false").
+
+  Controller: app.cookyourbooks.gui.view.LibraryViewController
+  ViewModel:  app.cookyourbooks.gui.viewmodel.LibraryViewModel
+-->
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="app.cookyourbooks.gui.view.LibraryViewController"
+           styleClass="library-view">
+
+    <!-- ── Main layout ─────────────────────────────────────────────────── -->
+    <BorderPane>
+
+        <!-- Toolbar: title, filter field, and action buttons -->
+        <top>
+            <VBox styleClass="library-toolbar" spacing="8">
+                <padding>
+                    <Insets top="12" right="16" bottom="12" left="16"/>
+                </padding>
+                <Label text="My Library" styleClass="view-title"/>
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <!--
+                      Filter field — the controller will bind this to
+                      LibraryViewModel.filterTextProperty() so the list
+                      updates on every keystroke (requirements L11/L12).
+                    -->
+                    <TextField fx:id="filterField"
+                               promptText="Filter collections..."
+                               HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="refreshButton" text="Refresh"/>
+                    <Button fx:id="newCollectionButton" text="New Collection"/>
+                </HBox>
+            </VBox>
+        </top>
+
+        <!-- SplitPane: collections panel (left) and recipes panel (right) -->
+        <center>
+            <SplitPane fx:id="mainSplitPane" dividerPositions="0.35">
+
+                <!-- Left panel: collection list + delete action -->
+                <VBox styleClass="library-panel" spacing="8">
+                    <padding>
+                        <Insets top="12" right="12" bottom="12" left="12"/>
+                    </padding>
+                    <Label text="Collections" styleClass="panel-title"/>
+                    <!--
+                      Bound to LibraryViewModel.collectionsProperty().
+                      Selection triggers LibraryViewModel.selectCollection().
+                    -->
+                    <ListView fx:id="collectionsListView" VBox.vgrow="ALWAYS"/>
+                    <Button fx:id="deleteCollectionButton"
+                            text="Delete Collection"
+                            maxWidth="Infinity"/>
+                </VBox>
+
+                <!-- Right panel: recipes in the selected collection -->
+                <VBox styleClass="library-panel" spacing="8">
+                    <padding>
+                        <Insets top="12" right="12" bottom="12" left="12"/>
+                    </padding>
+                    <Label text="Recipes" styleClass="panel-title"/>
+                    <!--
+                      Bound to LibraryViewModel.recipesProperty().
+                      Selection triggers LibraryViewModel.selectRecipe(),
+                      which provides the recipe ID for navigation (L9).
+                    -->
+                    <ListView fx:id="recipesListView" VBox.vgrow="ALWAYS"/>
+                    <Button fx:id="viewRecipeButton"
+                            text="View Recipe"
+                            maxWidth="Infinity"/>
+                </VBox>
+
+            </SplitPane>
+        </center>
+
+          <!-- Undo notification area below both panels (outside SplitPane) -->
+          <bottom>
+            <HBox fx:id="undoBar"
+                visible="false"
+                managed="false"
+                alignment="CENTER"
+                spacing="12"
+                styleClass="undo-bar">
+              <padding>
+                <Insets top="8" right="16" bottom="12" left="16"/>
+              </padding>
+              <Label fx:id="undoMessageLabel"/>
+              <Button fx:id="undoButton" text="Undo"/>
+            </HBox>
+          </bottom>
+
+    </BorderPane>
+
+    <!-- ── Loading overlay ─────────────────────────────────────────────── -->
+    <!--
+      Shown while LibraryViewModel.loadingProperty() is true (requirement L8).
+      Sits on top of the BorderPane in the StackPane's z-order.
+      managed="false" ensures it does not affect layout when hidden.
+    -->
+    <ProgressIndicator fx:id="loadingIndicator"
+                       visible="false"
+                       managed="false"
+                       maxWidth="64"
+                       maxHeight="64"/>
+
+</StackPane>

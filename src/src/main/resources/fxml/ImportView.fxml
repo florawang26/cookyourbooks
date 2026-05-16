@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="app.cookyourbooks.gui.view.ImportViewController"
+      spacing="10" style="-fx-padding: 20;">
+
+    <!-- IDLE PANE -->
+    <VBox fx:id="idlePane" spacing="10">
+        <Label text="Import a Recipe from Image"/>
+        <Button fx:id="selectFileButton" text="Select Image File"/>
+    </VBox>
+
+    <!-- PROCESSING PANE -->
+    <VBox fx:id="processingPane" spacing="10">
+        <Label fx:id="statusLabel" text="Processing..."/>
+        <ProgressBar fx:id="progressBar" progress="-1"/>
+        <Button fx:id="cancelButton" text="Cancel"/>
+    </VBox>
+
+    <!-- REVIEW PANE -->
+    <VBox fx:id="reviewPane" spacing="10">
+        <Label text="Review Imported Recipe"/>
+        <TextField fx:id="titleField"/>
+        <ListView fx:id="ingredientsList"/>
+        <ComboBox fx:id="collectionsDropdown"/>
+        <HBox spacing="10">
+            <Button fx:id="acceptButton" text="Accept"/>
+            <Button fx:id="rejectButton" text="Reject"/>
+        </HBox>
+    </VBox>
+
+    <!-- ERROR PANE -->
+    <VBox fx:id="errorPane" spacing="10">
+        <Label fx:id="errorLabel" text="Error"/>
+        <Button fx:id="backButton" text="Try Again"/>
+    </VBox>
+
+</VBox>

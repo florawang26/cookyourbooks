@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="app.cookyourbooks.gui.view.RecipeEditorViewController"
+            styleClass="recipe-editor-root">
+
+    <top>
+        <HBox spacing="8" alignment="CENTER_LEFT" styleClass="recipe-topbar">
+            <padding>
+                <Insets top="8" right="8" bottom="8" left="8"/>
+            </padding>
+            <Button fx:id="backToRecipesButton" id="recipe-back-button" text="Back to Recipes"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="editButton" id="recipe-edit-button" text="Edit"/>
+        </HBox>
+    </top>
+
+    <center>
+        <HBox spacing="12" styleClass="recipe-content">
+            <padding>
+                <Insets top="8" right="8" bottom="8" left="8"/>
+            </padding>
+
+            <ScrollPane fitToWidth="true" fitToHeight="true" HBox.hgrow="ALWAYS" styleClass="recipe-left-scroll">
+                <content>
+                    <VBox spacing="12" styleClass="recipe-left-column">
+                        <StackPane>
+                            <Label fx:id="titleLabel"
+                                   id="recipe-title-label"
+                                   text="Recipe Title"
+                                   styleClass="recipe-title-display"
+                                   maxWidth="Infinity"/>
+                            <TextField fx:id="titleField"
+                                       id="recipe-title-field"
+                                       promptText="Recipe Title"
+                                       styleClass="recipe-title-edit"/>
+                        </StackPane>
+
+                        <Label text="Instructions" styleClass="recipe-subheading"/>
+                        <ListView fx:id="instructionsListView"
+                                  id="recipe-instructions-list"
+                                  minHeight="0"
+                                  VBox.vgrow="ALWAYS"/>
+                        <Button fx:id="addInstructionButton"
+                                id="recipe-add-instruction"
+                                text="Add Step"
+                                visible="false"
+                                managed="false"
+                                maxWidth="Infinity"/>
+                    </VBox>
+                </content>
+            </ScrollPane>
+
+            <VBox spacing="8" styleClass="recipe-ingredients-pane" prefWidth="280" minWidth="280" maxWidth="280">
+                <Label text="Ingredients" styleClass="recipe-subheading"/>
+                <ListView fx:id="ingredientsListView"
+                          id="recipe-ingredients-list"
+                          VBox.vgrow="ALWAYS"/>
+                <Button fx:id="addIngredientButton"
+                        id="recipe-add-ingredient"
+                        text="Add Ingredient"
+                        visible="false"
+                        managed="false"
+                        maxWidth="Infinity"/>
+            </VBox>
+        </HBox>
+    </center>
+
+    <bottom>
+        <VBox spacing="8" styleClass="recipe-bottom-bar">
+            <padding>
+                <Insets top="0" right="8" bottom="8" left="8"/>
+            </padding>
+            <Label fx:id="statusLabel" id="recipe-status-label" styleClass="status-label"/>
+            <HBox fx:id="editActionBar"
+                  spacing="8"
+                  alignment="CENTER_RIGHT"
+                  visible="false"
+                  managed="false">
+                <Button fx:id="discardButton" id="recipe-discard-button" text="Discard Changes"/>
+                <Button fx:id="saveButton" id="recipe-save-button" text="Save"/>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT">
+                <Button fx:id="exportPdfButton" id="recipe-export-pdf-button" text="Export to PDF"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="cookModeButton" id="recipe-cook-mode-button" text="Cook Mode"/>
+            </HBox>
+        </VBox>
+    </bottom>
+
+</BorderPane>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<!--
+  Search & Filter view.
+
+  Layout:
+    top    — search bar row (TextField + ProgressIndicator + status Label + Clear button)
+    left   — ingredient filter panel (input TextField + Add button + active filters ListView)
+    center — search results ListView
+-->
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="app.cookyourbooks.gui.view.SearchViewController">
+
+    <!-- Top: search bar -->
+    <top>
+        <HBox spacing="8" alignment="CENTER_LEFT">
+            <padding>
+                <Insets top="8" right="8" bottom="8" left="8"/>
+            </padding>
+            <TextField fx:id="searchField"
+                       promptText="Search recipes..."
+                       HBox.hgrow="ALWAYS"
+                       maxWidth="Infinity"/>
+            <ProgressIndicator fx:id="searchingIndicator" maxWidth="24" maxHeight="24"/>
+            <Label fx:id="statusLabel"/>
+            <Button fx:id="clearButton" text="Clear"/>
+        </HBox>
+    </top>
+
+    <!-- Left: ingredient filter panel -->
+    <left>
+        <VBox spacing="8" minWidth="180" maxWidth="220">
+            <padding>
+                <Insets top="8" right="8" bottom="8" left="8"/>
+            </padding>
+            <Label text="Filter by ingredient"/>
+            <HBox spacing="4">
+                <TextField fx:id="ingredientFilterField"
+                           promptText="e.g. flour"
+                           HBox.hgrow="ALWAYS"
+                           maxWidth="Infinity"/>
+                <Button fx:id="addFilterButton" text="Add"/>
+            </HBox>
+            <!-- Active ingredient filters; each row has a remove button (handled in controller) -->
+            <ListView fx:id="activeFiltersListView" VBox.vgrow="ALWAYS"/>
+        </VBox>
+    </left>
+
+    <!-- Center: search results -->
+    <center>
+        <VBox spacing="4">
+            <padding>
+                <Insets top="8" right="8" bottom="8" left="8"/>
+            </padding>
+            <Label text="Results"/>
+            <ListView fx:id="resultsListView" VBox.vgrow="ALWAYS"/>
+        </VBox>
+    </center>
+
+</BorderPane>

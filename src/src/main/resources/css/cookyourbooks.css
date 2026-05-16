@@ -1,0 +1,195 @@
+/*
+ * Shared styles for CookYourBooks.
+ *
+ * Extend this file with your team's theming. The provided styles cover
+ * the main layout (sidebar + content area). Add styles for your feature
+ * views as needed.
+ */
+
+/* ── Root ── */
+.root-pane {
+    -fx-background-color: #f5f5f5;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+    -fx-background-color: #2c3e50;
+    -fx-pref-width: 180;
+    -fx-min-width: 180;
+}
+
+.sidebar-title {
+    -fx-text-fill: white;
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+    -fx-letter-spacing: 0.4px;
+    -fx-padding: 0 0 12 4;
+}
+
+/* ── Navigation buttons ── */
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #bdc3c7;
+    -fx-font-size: 13;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 8 12;
+    -fx-cursor: hand;
+    -fx-background-radius: 4;
+}
+
+.nav-button:hover {
+    -fx-background-color: #34495e;
+    -fx-text-fill: white;
+}
+
+.nav-button.nav-active {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-letter-spacing: 0.4px;
+}
+
+/* ── Content area ── */
+.content-area {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);
+}
+
+/* ── Common controls (for feature views to use) ── */
+.section-title {
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+    -fx-letter-spacing: 0.4px;
+}
+
+.status-label {
+    -fx-text-fill: #7f8c8d;
+    -fx-font-size: 12;
+}
+
+.error-label {
+    -fx-text-fill: #e74c3c;
+    -fx-font-size: 12;
+}
+
+.success-label {
+    -fx-text-fill: #27ae60;
+    -fx-font-size: 12;
+}
+
+/* ── Recipe Editor ── */
+.recipe-editor-root {
+    -fx-background-color: transparent;
+}
+
+.recipe-topbar {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #ecf0f1;
+    -fx-border-width: 0 0 1 0;
+}
+
+.recipe-content {
+    -fx-background-color: transparent;
+}
+
+.recipe-left-scroll {
+    -fx-background-color: transparent;
+    -fx-border-color: #ecf0f1;
+    -fx-border-width: 1;
+    -fx-background-insets: 0;
+}
+
+.recipe-left-scroll > .viewport {
+    -fx-background-color: #ffffff;
+}
+
+.recipe-left-column {
+    -fx-padding: 12;
+    -fx-background-color: #ffffff;
+}
+
+.recipe-subheading {
+    -fx-font-size: 14;
+    -fx-font-weight: normal;
+    -fx-letter-spacing: 0.4px;
+    -fx-font-smoothing-type: gray;
+    -fx-padding: 1 1 3 1;
+}
+
+.recipe-title-display {
+    -fx-font-size: 26;
+    -fx-font-weight: normal;
+    -fx-letter-spacing: 0.4px;
+    -fx-font-smoothing-type: gray;
+    -fx-text-fill: #1f2933;
+    -fx-padding: 7 2 9 2;
+}
+
+.recipe-title-edit {
+    -fx-font-size: 23;
+    -fx-font-weight: normal;
+    -fx-letter-spacing: 0.4px;
+    -fx-font-smoothing-type: gray;
+    -fx-padding: 5 10 5 10;
+}
+
+.recipe-step-header {
+    -fx-font-size: 15;
+    -fx-font-weight: normal;
+    -fx-letter-spacing: 0.4px;
+}
+
+.recipe-step-label {
+    -fx-min-width: 64;
+    -fx-pref-width: 64;
+}
+
+.recipe-step-input {
+    -fx-font-size: 12;
+    -fx-padding: 6 8 6 8;
+}
+
+.recipe-step-remove {
+    -fx-font-size: 11;
+    -fx-padding: 0;
+}
+
+#recipe-instructions-list {
+    -fx-background-color: #ffffff;
+    -fx-control-inner-background: #ffffff;
+}
+
+#recipe-instructions-list .list-cell {
+    -fx-background-color: #ffffff;
+}
+
+.recipe-ingredients-pane {
+    -fx-padding: 12;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #ecf0f1;
+    -fx-border-width: 1;
+}
+
+.recipe-ingredients-pane .list-cell {
+    -fx-padding: 3 5 3 5;
+}
+
+.recipe-ingredient-name {
+    -fx-font-size: 11;
+}
+
+.recipe-ingredient-amount {
+    -fx-font-size: 10;
+}
+
+.recipe-ingredient-remove {
+    -fx-font-size: 11;
+    -fx-padding: 0;
+}
+
+.recipe-bottom-bar {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #ecf0f1;
+    -fx-border-width: 1 0 0 0;
+}
